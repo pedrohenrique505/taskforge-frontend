@@ -1,26 +1,240 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fafafa;
+  --background-solid: #ffffff;
+  --foreground: #1a1a1a;
+  --card-background: #ffffff;
+  --card-background-solid: #ffffff;
+  --border-color: #e5e5e5;
+  --hover-background: #f5f5f5;
+  --accent-color: #000000;
+  --accent-hover: #333333;
+  --muted-color: #666666;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.12);
 }
 
 @theme inline {
-  --color-background: var(--background);
+  --color-background: var(--background-solid);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
+[data-theme="dark"] {
+  --background: #0a0a0a;
+  --background-solid: #111111;
+  --foreground: #ffffff;
+  --card-background: #111111;
+  --card-background-solid: #111111;
+  --border-color: #333333;
+  --hover-background: #1a1a1a;
+  --accent-color: #ffffff;
+  --accent-hover: #e0e0e0;
+  --muted-color: #999999;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme]) {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --background-solid: #111111;
+    --foreground: #ffffff;
+    --card-background: #111111;
+    --card-background-solid: #111111;
+    --border-color: #333333;
+    --hover-background: #1a1a1a;
+    --accent-color: #ffffff;
+    --accent-hover: #e0e0e0;
+    --muted-color: #999999;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.4);
   }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  transition: all 0.3s ease;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.bg-card {
+  background: var(--card-background);
+}
+
+.bg-card-solid {
+  background: var(--card-background-solid);
+}
+
+.border-theme {
+  border-color: var(--border-color);
+}
+
+.hover-theme:hover {
+  background: var(--hover-background);
+}
+
+.accent-color {
+  color: var(--accent-color);
+}
+
+.accent-bg {
+  background: var(--accent-color);
+}
+
+.accent-bg:hover {
+  background: var(--accent-hover);
+}
+
+[data-theme="dark"] .accent-bg {
+  background: #ffffff;
+  color: #000000;
+}
+
+[data-theme="dark"] .accent-bg:hover {
+  background: #e0e0e0;
+  color: #000000;
+}
+
+.muted-color {
+  color: var(--muted-color);
+}
+
+.shadow-minimal {
+  box-shadow: var(--shadow);
+}
+
+.shadow-minimal-hover:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-fade-in-scale {
+  animation: fadeInScale 0.5s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.5s ease-out;
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+.transition-all {
+  transition: all 0.2s ease;
+}
+
+.transition-transform {
+  transition: transform 0.2s ease;
+}
+
+.sidebar {
+  width: 280px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: var(--card-background-solid);
+  border-right: 1px solid var(--border-color);
+  z-index: 40;
+  transition: transform 0.3s ease;
+}
+
+.sidebar.closed {
+  transform: translateX(-100%);
+}
+
+.main-content {
+  margin-left: 280px;
+  transition: margin-left 0.3s ease;
+}
+
+.main-content.expanded {
+  margin-left: 0;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-solid);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--hover-background);
 }
