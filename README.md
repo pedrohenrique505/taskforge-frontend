@@ -150,7 +150,7 @@ Desenvolvido com ❤️ por Pedro Henrique
 
 - LinkedIn: [Pedro Henrique](https://linkedin.com/in/pedrohenrique1705)
 - GitHub: [@pedrohenrique505]([https://github.com/seu-usuario](https://github.com/pedrohenrique505))
-- Email: seu.email@exemplo.com
+- Email: contato.pedrohenriquesf@gmail.com
 
 ## 🙏 Agradecimentos
 
